@@ -1,4 +1,6 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
+import InputDrink from "./inputDrink"
 
 interface Drink {
   idDrink: string
@@ -6,11 +8,7 @@ interface Drink {
   strDrinkThumb: string
 }
 
-const URL = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="
-
-const URL2 = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i="
-
-const URL3 = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c="
+const URL = "https://www.thecocktaildb.com/api/json/v1/1"
 
 export default function SearchDrink() {
   const [drinksData, setDrinksData] = useState<Drink[] | []>([])
@@ -22,7 +20,7 @@ export default function SearchDrink() {
     status: false,
     msg: "",
   })
-
+  /*
   const fetchDrink = async (apiURL: string) => {
     setLoading(true)
     setIsError({ status: false, msg: "" })
@@ -44,50 +42,79 @@ export default function SearchDrink() {
       })
     }
   }
+*/
+  const fetchDrink = async (apiURL: string) => {
+    setLoading(true)
+    setIsError({ status: false, msg: "" })
+    try {
+      const response = await axios.get(apiURL)
+      const { drinks } = response.data
+      setDrinksData(drinks || [])
+      setLoading(false)
+      setIsError({ status: false, msg: "" })
+      if (!drinks) {
+        throw new Error("data not found")
+      }
+    } catch (error: any) {
+      console.log(error)
+      setLoading(false)
+      setIsError({
+        status: true,
+        msg: error.message || "something went wrong...",
+      })
+    }
+  }
 
   useEffect(() => {
-    const correctURL = `${URL}${searchTerm}`
+    const correctURL = `${URL}/search.php?s=${searchTerm}`
     fetchDrink(correctURL)
   }, [searchTerm])
 
   useEffect(() => {
-    const correctURL2 = `${URL2}${i}`
-    fetchDrink(correctURL2)
+    const correctURL = `${URL}/filter.php?i=${i}`
+    fetchDrink(correctURL)
   }, [i])
 
   useEffect(() => {
-    const correctURL3 = `${URL3}${c}`
-    fetchDrink(correctURL3)
+    const correctURL = `${URL}/filter.php?c=${c}`
+    fetchDrink(correctURL)
   }, [c])
 
   return (
     <>
-      <div>
+      <div className="bg-gray-200 h-auto py-3">
         <form>
-          <input
-            type="text"
-            name="search"
-            placeholder="search something new..."
+          <InputDrink
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-black mb-2 flex m-auto p-1 mt-3"
+            placeholder="search something new..."
           />
-          <input
-            type="text"
-            name="search"
-            placeholder="search ingredient..."
+          <InputDrink
             value={i}
             onChange={(e) => setI(e.target.value)}
-            className="border border-black mb-2 flex m-auto p-1 mt-3"
+            placeholder="search ingredient..."
           />
-          <input
-            type="text"
-            name="search"
-            placeholder="search category..."
+          <select
+            id="category"
+            name="category"
             value={c}
             onChange={(e) => setC(e.target.value)}
-            className="border border-black mb-2 flex m-auto p-1 mt-3"
-          />
+            className="border border-black mb-2 p-2  rounded-md w-80 focus:outline-none focus:ring focus:border-blue-300 flex m-auto"
+          >
+            <option value="">Select a category</option>
+            <option value="Ordinary Drink">Ordinary Drink</option>
+            <option value="Cocktail">Cocktail</option>
+            <option value="Shake">Shake</option>
+            <option value="Cocoa">Cocoa</option>
+            <option value="Shake">Shake</option>
+            <option value="Coffee / Tea">Coffee & Tea</option>
+            <option value="Homemade Liqueur">Homemade Liqueur</option>
+            <option value="Punch / Party Drink">Punch & Party Drink</option>
+            <option value="Beer">Beer</option>
+            <option value="Soft Drink">Soft Drink</option>
+            <option value="Other / Unknown">Other & Unknown</option>
+            {/* Adicione mais opções conforme necessário */}
+          </select>
         </form>
         <h1 className="flex justify-center text-lg font-semibold">
           Drinks count: {drinksData.length}
