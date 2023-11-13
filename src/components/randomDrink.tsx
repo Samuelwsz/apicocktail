@@ -2,22 +2,7 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-
-interface Drink {
-  idDrink: string
-  strDrink: string
-  strDrinkThumb: string
-  strIngredient1?: string | null
-  strIngredient2?: string | null
-  strIngredient3?: string | null
-  strIngredient4?: string | null
-  strIngredient5?: string | null
-  strIngredient6?: string | null
-  strIngredient7?: string | null
-  strIngredient8?: string | null
-  strIngredient9?: string | null
-  strIngredient10?: string | null
-}
+import { Drink } from "../interfaces/IDrink"
 
 export default function RamdomDrink() {
   const [loading, setLoading] = useState<boolean>(false)

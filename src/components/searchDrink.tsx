@@ -1,12 +1,10 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import InputDrink from "./inputDrink"
-
-interface Drink {
-  idDrink: string
-  strDrink: string
-  strDrinkThumb: string
-}
+import { ChevronLeftIcon } from "@heroicons/react/24/outline"
+import { Link } from "react-router-dom"
+import Modal from "./modal"
+import { Drink } from "../interfaces/IDrink"
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1"
 
@@ -20,6 +18,8 @@ export default function SearchDrink() {
     status: false,
     msg: "",
   })
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [selectedDrink, setSelectedDrink] = useState<Drink | null>(null)
   /*
   const fetchDrink = async (apiURL: string) => {
     setLoading(true)
@@ -80,9 +80,21 @@ export default function SearchDrink() {
     fetchDrink(correctURL)
   }, [c])
 
+  const handleOpenModal = (drink: Drink) => {
+    setSelectedDrink(drink)
+    setModalOpen(true)
+  }
+
   return (
     <>
       <div className="bg-gray-200 h-auto py-3">
+        <Link to="/">
+          <button className="p-1 pr-2 border border-black bg-slate-800 rounded-md text-white ml-3 flex items-center">
+            <ChevronLeftIcon className="w-4 h-4" />
+            Voltar
+          </button>
+        </Link>
+
         <form>
           <InputDrink
             value={searchTerm}
@@ -136,6 +148,7 @@ export default function SearchDrink() {
                 <li
                   key={idDrink}
                   className="bg-white rounded-md shadow-md overflow-hidden"
+                  onClick={() => handleOpenModal(eachDrink)}
                 >
                   <div>
                     <img
@@ -154,6 +167,15 @@ export default function SearchDrink() {
           </ul>
         )}
       </div>
+      {modalOpen && (
+        <Modal
+          drink={selectedDrink}
+          onClose={() => {
+            setModalOpen(false)
+            setSelectedDrink(null)
+          }}
+        />
+      )}
     </>
   )
 }
