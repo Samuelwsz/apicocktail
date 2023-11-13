@@ -5,6 +5,7 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
 import Modal from "./modal"
 import { Drink } from "../interfaces/IDrink"
+import imgError from "../assets/lemonade-6311505_1280.png"
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1"
 
@@ -80,9 +81,39 @@ export default function SearchDrink() {
     fetchDrink(correctURL)
   }, [c])
 
-  const handleOpenModal = (drink: Drink) => {
-    setSelectedDrink(drink)
-    setModalOpen(true)
+  const handleOpenModal = async (drink: Drink) => {
+    // Consulta detalhes do coquetel usando o ID
+    try {
+      const response = await axios.get(`${URL}/lookup.php?i=${drink.idDrink}`)
+      const { drinks } = response.data
+      if (drinks && drinks.length > 0) {
+        setSelectedDrink(drinks[0])
+        setModalOpen(true)
+      }
+    } catch (error) {
+      console.error("Error fetching cocktail details:", error)
+    }
+  }
+
+  const handleSearchTermChange = (value: string) => {
+    setSearchTerm(value)
+    // Limpar o conteúdo de outros inputs quando este input é preenchido
+    setI("")
+    setC("")
+  }
+
+  const handleIngredientChange = (value: string) => {
+    setI(value)
+    // Limpar o conteúdo de outros inputs quando este input é preenchido
+    setSearchTerm("")
+    setC("")
+  }
+
+  const handleCategoryChange = (value: string) => {
+    setC(value)
+    // Limpar o conteúdo de outros inputs quando este input é preenchido
+    setSearchTerm("")
+    setI("")
   }
 
   return (
@@ -98,19 +129,19 @@ export default function SearchDrink() {
         <form>
           <InputDrink
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearchTermChange(e.target.value)}
             placeholder="search something new..."
           />
           <InputDrink
             value={i}
-            onChange={(e) => setI(e.target.value)}
+            onChange={(e) => handleIngredientChange(e.target.value)}
             placeholder="search ingredient..."
           />
           <select
             id="category"
             name="category"
             value={c}
-            onChange={(e) => setC(e.target.value)}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="border border-black mb-2 p-2  rounded-md w-80 focus:outline-none focus:ring focus:border-blue-300 flex m-auto"
           >
             <option value="">Select a category</option>
@@ -133,11 +164,13 @@ export default function SearchDrink() {
         </h1>
         <hr />
         {loading && !isError?.status && (
-          <h3 className="text-2xl flex justify-center">Loading...</h3>
+          <h3 className="flex justify-center my-10 h-screen text-2xl">
+            Loading...
+          </h3>
         )}
         {isError?.status && (
-          <h3 className="text-4xl font-semibold flex justify-center text-red-600">
-            {isError.msg}
+          <h3 className="flex justify-center my-10 h-screen">
+            <img className="w-44 h-56" src={imgError} alt="" />
           </h3>
         )}
         {!loading && !isError?.status && (

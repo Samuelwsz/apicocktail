@@ -61,16 +61,14 @@ export default function RamdomDrink() {
                   <div className="p-8">
                     <h2 className="my-3 text-xl font-bold">Ingredients</h2>
                     <div className="font-semibold">
-                      <p>{c.strIngredient1}</p>
-                      <p>{c.strIngredient2}</p>
-                      <p>{c.strIngredient3}</p>
-                      <p>{c.strIngredient4}</p>
-                      <p>{c.strIngredient5}</p>
-                      <p>{c.strIngredient6}</p>
-                      <p>{c.strIngredient7}</p>
-                      <p>{c.strIngredient8}</p>
-                      <p>{c.strIngredient9}</p>
-                      <p>{c.strIngredient10}</p>
+                      {Object.entries(c)
+                        .filter(
+                          ([key, value]) =>
+                            key.startsWith("strIngredient") && value
+                        )
+                        .map(([key, value]) => (
+                          <p key={key}>{value}</p>
+                        ))}
                     </div>
                   </div>
                 </div>
