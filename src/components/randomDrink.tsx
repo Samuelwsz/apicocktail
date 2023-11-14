@@ -1,8 +1,8 @@
-import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Drink } from "../interfaces/IDrink"
+import Buttom from "./button"
 
 export default function RamdomDrink() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -35,10 +35,7 @@ export default function RamdomDrink() {
     <>
       <div className="h-screen bg-gray-200 pt-3">
         <Link to="/">
-          <button className="p-1 pr-2 border border-black bg-slate-800 rounded-md text-white ml-3 flex items-center">
-            <ChevronLeftIcon className="w-4 h-4" />
-            Voltar
-          </button>
+          <Buttom variant="primary">Return</Buttom>
         </Link>
         <div className="items-center bg-cover bg-center flex justify-center text-center text-black">
           {data.map((c) => {
@@ -72,12 +69,9 @@ export default function RamdomDrink() {
                     </div>
                   </div>
                 </div>
-                <button
-                  onClick={fecthCocktailGandler}
-                  className="p-3 mt-3 border border-black bg-slate-800 rounded-md text-white mb-2"
-                >
+                <Buttom variant="secondary" onClick={fecthCocktailGandler}>
                   Get another drink
-                </button>
+                </Buttom>
               </div>
             )
           })}

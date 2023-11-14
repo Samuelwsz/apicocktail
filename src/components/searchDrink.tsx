@@ -1,11 +1,11 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import InputDrink from "./inputDrink"
-import { ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
 import Modal from "./modal"
 import { Drink } from "../interfaces/IDrink"
-import imgError from "../assets/lemonade-6311505_1280.png"
+import imgError from "../assets/wineglass-3312361_640.png"
+import Buttom from "./button"
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1"
 
@@ -120,10 +120,7 @@ export default function SearchDrink() {
     <>
       <div className="bg-gray-200 h-auto py-3">
         <Link to="/">
-          <button className="p-1 pr-2 border border-black bg-slate-800 rounded-md text-white ml-3 flex items-center">
-            <ChevronLeftIcon className="w-4 h-4" />
-            Voltar
-          </button>
+          <Buttom variant="primary">Return</Buttom>
         </Link>
 
         <form>
@@ -170,7 +167,7 @@ export default function SearchDrink() {
         )}
         {isError?.status && (
           <h3 className="flex justify-center my-10 h-screen">
-            <img className="w-44 h-56" src={imgError} alt="" />
+            <img className="w-80 h-64" src={imgError} alt="Image Error" />
           </h3>
         )}
         {!loading && !isError?.status && (
