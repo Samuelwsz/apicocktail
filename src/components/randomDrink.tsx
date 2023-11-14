@@ -8,7 +8,7 @@ export default function RamdomDrink() {
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<Drink[]>([])
 
-  const url = "http://www.thecocktaildb.com/api/json/v1/1/random.php"
+  const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
 
   const fecthCocktailGandler = useCallback(() => {
     setLoading(true)
