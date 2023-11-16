@@ -21,29 +21,7 @@ export default function SearchDrink() {
   })
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [selectedDrink, setSelectedDrink] = useState<Drink | null>(null)
-  /*
-  const fetchDrink = async (apiURL: string) => {
-    setLoading(true)
-    setIsError({ status: false, msg: "" })
-    try {
-      const response = await fetch(apiURL)
-      const { drinks } = await response.json()
-      setDrinksData(drinks || [])
-      setLoading(false)
-      setIsError({ status: false, msg: "" })
-      if (!drinks) {
-        throw new Error("data not found")
-      }
-    } catch (error: any) {
-      console.log(error)
-      setLoading(false)
-      setIsError({
-        status: true,
-        msg: error.message || "something went wrong...",
-      })
-    }
-  }
-*/
+
   const fetchDrink = async (apiURL: string) => {
     setLoading(true)
     setIsError({ status: false, msg: "" })

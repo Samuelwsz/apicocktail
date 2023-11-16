@@ -1,33 +1,17 @@
-import axios from "axios"
-import { useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Drink } from "../interfaces/IDrink"
 import Buttom from "./button"
+import { useAPI } from "../hooks/useAPI"
 
 export default function RamdomDrink() {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [data, setData] = useState<Drink[]>([])
+  const { data, isFetching, error, refetch } = useAPI<Drink[]>("random.php")
 
-  const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
+  const getRandomDrink = () => {
+    // Use refetch function from useAPI to reload the data
+    refetch()
+  }
 
-  const fecthCocktailGandler = useCallback(() => {
-    setLoading(true)
-
-    axios
-      .get(url)
-      .then((res) => {
-        console.log(res.data)
-        setData(res.data.drinks)
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setLoading(false))
-  }, [])
-
-  useEffect(() => {
-    fecthCocktailGandler()
-  }, [fecthCocktailGandler])
-
-  if (loading) {
+  if (isFetching) {
     return <h2 className="text-black bg-gray-200">Loading...</h2>
   }
 
@@ -38,7 +22,18 @@ export default function RamdomDrink() {
           <Buttom variant="primary">Return</Buttom>
         </Link>
         <div className="items-center bg-cover bg-center flex justify-center text-center text-black">
-          {data.map((c) => {
+          {error && data == null && (
+            <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
+              <p className="text-2xl mb-4">Error Loading Data</p>
+              <p className="mb-4">
+                Oops! Something went wrong. Please try again.
+              </p>
+              <Buttom variant="secondary" onClick={getRandomDrink}>
+                Try Again
+              </Buttom>
+            </div>
+          )}
+          {data?.map((c) => {
             return (
               <div
                 key={c.idDrink}
@@ -69,7 +64,7 @@ export default function RamdomDrink() {
                     </div>
                   </div>
                 </div>
-                <Buttom variant="secondary" onClick={fecthCocktailGandler}>
+                <Buttom variant="secondary" onClick={getRandomDrink}>
                   Get another drink
                 </Buttom>
               </div>
