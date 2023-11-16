@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import { Drink } from "../interfaces/IDrink"
 import Buttom from "./button"
-import { useAPI } from "../hooks/useAPI"
+import { useRandomAPI } from "../hooks/useRandom"
 
 export default function RamdomDrink() {
-  const { data, isFetching, error, refetch } = useAPI<Drink[]>("random.php")
+  const { data, isFetching, error, refetch } =
+    useRandomAPI<Drink[]>("random.php")
 
   const getRandomDrink = () => {
     // Use refetch function from useAPI to reload the data

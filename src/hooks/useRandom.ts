@@ -5,7 +5,7 @@ const api = axios.create({
   baseURL: "https://www.thecocktaildb.com/api/json/v1/1/",
 })
 
-export function useAPI<T = unknown>(url: string) {
+export function useRandomAPI<T = unknown>(url: string) {
   const [data, setData] = useState<T | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)

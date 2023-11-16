@@ -30,7 +30,7 @@ export default function Modal({ drink, onClose }: ModalProps) {
         {/* Caixa centralizada */}
         <div
           ref={modalRef}
-          className="bg-white p-10 rounded-md relative container"
+          className="bg-white p-10 rounded-md relative container m-5 md:max-w-xl lg:max-w-3xl xl:max-w-4xl"
         >
           <button
             onClick={onClose}

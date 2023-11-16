@@ -1,27 +1,43 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import InputDrink from "./inputDrink"
 import { Link } from "react-router-dom"
 import Modal from "./modal"
 import { Drink } from "../interfaces/IDrink"
 import imgError from "../assets/wineglass-3312361_640.png"
 import Buttom from "./button"
+import { useSearchAPI } from "../hooks/useSearch"
 
 const URL = "https://www.thecocktaildb.com/api/json/v1/1"
 
 export default function SearchDrink() {
-  const [drinksData, setDrinksData] = useState<Drink[] | []>([])
+  //  const [drinksData, setDrinksData] = useState<Drink[] | []>([])
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [i, setI] = useState<string>("")
   const [c, setC] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(false)
-  const [isError, setIsError] = useState<{ status: boolean; msg: string }>({
+  // const [loading, setLoading] = useState<boolean>(false)
+  /* const [isError, setIsError] = useState<{ status: boolean; msg: string }>({
     status: false,
     msg: "",
-  })
+  })*/
+
+  const {
+    data: drinksData,
+    isFetching,
+    error,
+  } = useSearchAPI<Drink[]>(
+    searchTerm
+      ? `${URL}/search.php?s=${searchTerm}`
+      : i
+      ? `${URL}/filter.php?i=${i}`
+      : c
+      ? `${URL}/filter.php?c=${c}`
+      : ""
+  )
+
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [selectedDrink, setSelectedDrink] = useState<Drink | null>(null)
-
+  /*
   const fetchDrink = async (apiURL: string) => {
     setLoading(true)
     setIsError({ status: false, msg: "" })
@@ -57,7 +73,7 @@ export default function SearchDrink() {
   useEffect(() => {
     const correctURL = `${URL}/filter.php?c=${c}`
     fetchDrink(correctURL)
-  }, [c])
+  }, [c])*/
 
   const handleOpenModal = async (drink: Drink) => {
     // Consulta detalhes do coquetel usando o ID
@@ -135,22 +151,22 @@ export default function SearchDrink() {
           </select>
         </form>
         <h1 className="flex justify-center text-lg font-semibold">
-          Drinks count: {drinksData.length}
+          Drinks count: {drinksData?.length}
         </h1>
         <hr />
-        {loading && !isError?.status && (
+        {isFetching && !error?.status && (
           <h3 className="flex justify-center my-10 h-screen text-2xl">
             Loading...
           </h3>
         )}
-        {isError?.status && (
+        {error?.status && (
           <h3 className="flex justify-center my-10 h-screen">
             <img className="w-80 h-64" src={imgError} alt="Image Error" />
           </h3>
         )}
-        {!loading && !isError?.status && (
+        {!isFetching && !error?.status && (
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 container text-center m-auto mt-2">
-            {drinksData.map((eachDrink) => {
+            {drinksData?.map((eachDrink) => {
               const { idDrink, strDrink, strDrinkThumb } = eachDrink
               return (
                 <li
