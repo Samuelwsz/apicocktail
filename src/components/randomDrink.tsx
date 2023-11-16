@@ -13,12 +13,12 @@ export default function RamdomDrink() {
   }
 
   if (isFetching) {
-    return <h2 className="text-black bg-gray-200">Loading...</h2>
+    return <h2 className="text-black">Loading...</h2>
   }
 
   return (
     <>
-      <div className="h-screen bg-gray-200 pt-3">
+      <div className="h-screen pt-3">
         <Link to="/">
           <Buttom variant="primary">Return</Buttom>
         </Link>

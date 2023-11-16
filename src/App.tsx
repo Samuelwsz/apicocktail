@@ -13,12 +13,12 @@ export default function App() {
           <h1 className="text-4xl font-bold mb-4">Api cocktail</h1>
           <div className="flex justify-center">
             <Link to="/ramdomdrink">
-              <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mr-4 rounded">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 mr-4 rounded transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
                 Ramdom Drink ?
               </button>
             </Link>
             <Link to="/searchdrink">
-              <button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
                 Search drinks by ?
               </button>
             </Link>

@@ -13,7 +13,8 @@ export default function Buttom({
   onClick,
 }: ButtomProps) {
   const variantClasses = {
-    primary: "p-1 pr-2 ml-3 flex items-center",
+    primary:
+      "p-1 pr-2 ml-3 flex items-center transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:bg-slate-700 duration-300",
     secondary: "p-3 mt-3 mb-2",
   }
 

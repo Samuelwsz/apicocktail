@@ -112,7 +112,7 @@ export default function SearchDrink() {
 
   return (
     <>
-      <div className="bg-gray-200 h-auto py-3">
+      <div className="py-3">
         <Link to="/">
           <Buttom variant="primary">Return</Buttom>
         </Link>
@@ -155,7 +155,7 @@ export default function SearchDrink() {
         </h1>
         <hr />
         {isFetching && !error?.status && (
-          <h3 className="flex justify-center my-10 h-screen text-2xl">
+          <h3 className="flex justify-center my-10 text-2xl">
             Loading...
           </h3>
         )}
