@@ -165,13 +165,13 @@ export default function SearchDrink() {
           </h3>
         )}
         {!isFetching && !error?.status && (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 container text-center m-auto mt-2 px-3">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 container text-center m-auto mt-2 px-5">
             {drinksData?.map((eachDrink) => {
               const { idDrink, strDrink, strDrinkThumb } = eachDrink
               return (
                 <li
                   key={idDrink}
-                  className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer"
+                  className="bg-white rounded-md shadow-md overflow-hidden cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
                   onClick={() => handleOpenModal(eachDrink)}
                 >
                   <div>

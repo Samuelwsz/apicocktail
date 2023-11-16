@@ -4,7 +4,7 @@ import axios from "axios"
 
 
 const api = axios.create({
-  baseURL: "https://www.thecocktaildb.com/api/json/v1/1/",
+  baseURL: "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Lime",
 })
 
 export function useSearchAPI<T = unknown>(url: string) {
